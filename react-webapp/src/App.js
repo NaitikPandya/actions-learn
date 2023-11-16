@@ -10,7 +10,7 @@ function App() {
      <div className='AddItem'>
       <TextField value={enteredText} label="Item" inputProps={{
         'data-testid': 'itemTextInput'
-      }} data-testid='itemText' onChange={(value) => {
+      }} data-testid='itemTextf' onChange={(value) => {
         if(value.target.value){
           setEnteredText(value.target.value)
         }
