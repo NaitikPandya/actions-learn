@@ -1,0 +1,38 @@
+name: CI/CD
+on:
+    push:
+        branches:
+            - feature/webApp
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Nodejs
+              uses: actions/setup-node@v3
+              with:
+                node-version: '16.14.0'
+            - name: 'Install dependencies'    
+              run: npm i
+            - name: 'Run Tests'
+              run: npm test
+
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Nodejs
+              uses: actions/setup-node@v3
+              with:
+                node-version: '16.14.0'
+            - name: 'Create a Build'
+              run: npm run build
+            - name: 'Create a Zip File'
+              run: zip -r todo.zip react-webapp/build/
+            - name: Deploy to Netlify
+              run: curl -H 'Content-Type: application/zip' \
+                        -H "Authorization: Bearer " ${{ secrets.NETLIFY_TOKEN }} \
+                        --data-binary "todo.zip" \
+                        https://api.netlify.com/api/v1/sites
+
