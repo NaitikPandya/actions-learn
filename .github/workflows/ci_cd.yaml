@@ -5,7 +5,7 @@ on:
             - feature/webApp
 
 jobs:
-    test:
+    Test-And-Deploy:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
@@ -18,21 +18,13 @@ jobs:
                   cd react-webapp/
                   npm i
             - name: 'Run Tests'
-              run: npm test
-
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Nodejs
-              uses: actions/setup-node@v3
-              with:
-                node-version: '16.14.0'
+              run: |
+                  cd react-webapp/
+                  npm test
             - name: 'Create a Build'
               run: |
                   cd react-webapp/
                   npm run build
-                  cd ..
             - name: 'Create a Zip File'
               run: zip -r todo.zip react-webapp/build/
             - name: Deploy to Netlify
@@ -40,4 +32,5 @@ jobs:
                         -H "Authorization:Bearer " ${{ secrets.NETLIFY_TOKEN }} \
                         --data-binary "todo.zip" \
                         https://api.netlify.com/api/v1/sites
+           
 
