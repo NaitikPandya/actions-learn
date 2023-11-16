@@ -31,8 +31,8 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip react-webapp/build/
             - name: Deploy to Netlify
-              run: curl -H 'Content-Type: application/zip' \
-                        -H "Authorization: Bearer " ${{ secrets.NETLIFY_TOKEN }} \
+              run: curl -H "Content-Type:application/zip" \
+                        -H "Authorization:Bearer " ${{ secrets.NETLIFY_TOKEN }} \
                         --data-binary "todo.zip" \
                         https://api.netlify.com/api/v1/sites
 
