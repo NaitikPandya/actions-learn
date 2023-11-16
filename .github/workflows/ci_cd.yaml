@@ -7,6 +7,9 @@ on:
 jobs:
     Test-And-Deploy:
         runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./react-webapp/
         steps:
             - uses: actions/checkout@v3
             - name: Use Nodejs
@@ -14,23 +17,12 @@ jobs:
               with:
                 node-version: '16.14.0'
             - name: 'Install dependencies'    
-              run: |
-                  cd react-webapp/
-                  npm i
+              run: npm i
             - name: 'Run Tests'
-              run: |
-                  cd react-webapp/
-                  npm test
+              run: npm test
             - name: 'Create a Build'
-              run: |
-                  cd react-webapp/
-                  npm run build
+              run: npm run build
             - name: 'Create a Zip File'
-              run: zip -r todo.zip react-webapp/build/
+              run: zip -r todo.zip build/
             - name: Deploy to Netlify
-              run: curl -H "Content-Type:application/zip" \
-                        -H "Authorization:Bearer " ${{ secrets.NETLIFY_TOKEN }} \
-                        --data-binary "todo.zip" \
-                        https://api.netlify.com/api/v1/sites
-           
-
+              run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "todo.zip" https://api.netlify.com/api/v1/sites'
