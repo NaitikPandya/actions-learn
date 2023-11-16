@@ -20,7 +20,7 @@ function App() {
           setTodoList(oldArray => [...oldArray,enteredText])
           setEnteredText('')
         }
-      }}>Add</Button>
+      }}>Add to list</Button>
      </div>
      <div className='TodoList'>
      <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
