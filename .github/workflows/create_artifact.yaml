@@ -1,0 +1,21 @@
+name: Create Artifact
+on: 
+  workflow_call:
+    inputs:
+      filename:
+        required: true
+        type: string
+      path:
+        required: true
+        type: string
+
+jobs:
+  create_artifate:
+    name: Create Artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{inputs.filename}}
+          path: ${{inputs.path}}
+          
