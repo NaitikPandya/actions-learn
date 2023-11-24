@@ -20,12 +20,12 @@ jobs:
             - name: 'Install dependencies'    
               run: npm i
             - name: 'Run Tests'
-              run: npm test --coverage
+              run: npm test -- --coverage
             - name: Upload Test Results
               uses: actions/upload-artifact@v3
               with:
                   name: Test Result
-                  path: ./coverage/icov-report/index.html
+                  path: ${{github.workspace}}/coverage/icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
@@ -49,7 +49,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: Build
-                  path: ./todo.zip
+                  path: ${{github.workspace}}/todo.zip
     deploy_to_production:
         name: 'Deploy To Production'
         needs: [create_build]
