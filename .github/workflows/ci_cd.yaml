@@ -25,7 +25,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: Test Result
-                  path: ${{github.workspace}}/react-webapp/coverage/icov-report/index.html
+                  path: ${{github.workspace}}/react-webapp/coverage/Icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
@@ -55,11 +55,14 @@ jobs:
         needs: [create_build]
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v3
             - name: 'get the build zip'
               uses: actions/download-artifact@v3
               with:
                   name: Build
-            - name: 'demo'
+            - name: list Files
+              run: ls
+            - name: 'Deploy to Netlify'
               run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@Build.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
         
               
