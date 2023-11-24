@@ -25,7 +25,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: Test Result
-                  path: coverage/icov-report/index.html
+                  path: ./coverage/icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
@@ -48,7 +48,7 @@ jobs:
             - name: Upload Build
               uses: actions/upload-artifact@v3
               with:
-                  filename: Build
+                  name: Build
                   path: todo.zip
     deploy_to_production:
         name: 'Deploy To Production'
