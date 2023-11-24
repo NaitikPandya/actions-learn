@@ -3,6 +3,7 @@ on:
     push:
         branches:
             - feature/webApp
+            - webAppReact
 
 jobs:
     Test:
@@ -21,7 +22,7 @@ jobs:
             - name: 'Run Tests'
               run: npm test
             - name: Upload Test Results
-            - uses: ./.github/workflows/create_artifact.yaml
+              uses: ./.github/workflows/create_artifact.yaml
               with:
                   filename: Test Result
                   path: coverage/icov-report/index.html
@@ -45,7 +46,7 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-            - uses: ./.github/workflows/create_artifact.yaml
+              uses: ./.github/workflows/create_artifact.yaml
               with:
                   filename: Build
                   path: todo.zip
@@ -54,8 +55,12 @@ jobs:
         needs: [create_build]
         runs-on: ubuntu-latest
         steps:
+            - name: 'get the build zip'
+              uses: actions/download-artifact@v3
+              with:
+                  name: Build
             - name: 'demo'
-              run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@todo.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
+              run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@Build.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
         
               
     
