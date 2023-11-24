@@ -54,8 +54,7 @@ jobs:
         needs: [create_build]
         runs-on: ubuntu-latest
         steps:
-            - name: Using Netlify API
-              run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@todo.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
+            - run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@todo.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
         
               
     
