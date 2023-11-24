@@ -22,7 +22,7 @@ jobs:
             - name: 'Run Tests'
               run: npm test
             - name: Upload Test Results
-              uses: ./.github/workflows/create_artifact.yaml
+              uses: ./create_artifact.yaml
               with:
                   filename: Test Result
                   path: coverage/icov-report/index.html
@@ -46,7 +46,7 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-              uses: ./.github/workflows/create_artifact.yaml
+              uses: ./create_artifact.yaml
               with:
                   filename: Build
                   path: todo.zip
