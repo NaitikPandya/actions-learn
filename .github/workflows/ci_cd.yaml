@@ -5,7 +5,7 @@ on:
             - feature/webApp
 
 jobs:
-    Test-And-Deploy:
+    Test:
         runs-on: ubuntu-latest
         defaults:
           run:
@@ -20,9 +20,42 @@ jobs:
               run: npm i
             - name: 'Run Tests'
               run: npm test
+            - name: Upload Test Results
+            - uses: ./.github/workflows/create_artifact.yaml
+              with:
+                  filename: Test Result
+                  path: coverage/icov-report/index.html
+    create_build:
+        name: Create Build
+        needs: [Test]
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./react-webapp/
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Nodejs
+              uses: actions/setup-node@v3
+              with:
+                node-version: '16.14.0'
+            - name: 'Install dependencies'    
+              run: npm i
             - name: 'Create a Build'
               run: npm run build
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
-            - name: Deploy to Netlify
+            - name: Upload Build
+            - uses: ./.github/workflows/create_artifact.yaml
+              with:
+                  filename: Build
+                  path: todo.zip
+    deploy_to_production:
+        name: 'Deploy To Production'
+        needs: [create_build]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Using Netlify API
               run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@todo.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
+        
+              
+    
