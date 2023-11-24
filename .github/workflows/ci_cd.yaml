@@ -22,7 +22,7 @@ jobs:
             - name: 'Run Tests'
               run: npm test
             - name: Upload Test Results
-              uses: ./create_artifact.yaml
+              uses: NaitikPandya/actions-learn/.github/workflows/create_artifact.yaml@webAppReact
               with:
                   filename: Test Result
                   path: coverage/icov-report/index.html
@@ -46,7 +46,7 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-              uses: ./create_artifact.yaml
+              uses: NaitikPandya/actions-learn/.github/workflows/create_artifact.yaml@webAppReact
               with:
                   filename: Build
                   path: todo.zip
