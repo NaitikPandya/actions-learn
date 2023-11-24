@@ -25,7 +25,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: Test Result
-                  path: ${{github.workspace}}/coverage/icov-report/index.html
+                  path: ${{github.workspace}}/react-webapp/coverage/icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
@@ -49,7 +49,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: Build
-                  path: ${{github.workspace}}/todo.zip
+                  path: ${{github.workspace}}/react-webapp/todo.zip
     deploy_to_production:
         name: 'Deploy To Production'
         needs: [create_build]
