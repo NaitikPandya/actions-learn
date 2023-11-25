@@ -21,14 +21,11 @@ jobs:
               run: npm i
             - name: 'Run Tests'
               run: npm test -- --coverage
-            - name: 'LOOK FOLDER'
-              run: cd coverage
-                  | ls
             - name: Upload Test Results
               uses: ./
               with:
                   filename: Test Result
-                  path: ${{github.workspace}}/react-webapp/coverage/Icov-report/index.html
+                  path: ./react-webapp/coverage/Icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
