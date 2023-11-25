@@ -2,54 +2,17 @@ name: CI/CD
 on:
     push:
         branches:
+            - main
             - feature/webApp
             - webAppReact
 
 jobs:
     Test:
-        runs-on: ubuntu-latest
-        defaults:
-          run:
-            working-directory: ./react-webapp/
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Nodejs
-              uses: actions/setup-node@v3
-              with:
-                node-version: '16.14.0'
-            - name: 'Install dependencies'    
-              run: npm i
-            - name: 'Run Tests'
-              run: npm test -- --coverage
-            - name: Upload Test Results
-              uses: ./
-              with:
-                  filename: Test Result
-                  path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
+        uses: ${{github.workspace}}/.gtihub/workflows/run_test.yaml
     create_build:
         name: Create Build
         needs: [Test]
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./react-webapp/
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Nodejs
-              uses: actions/setup-node@v3
-              with:
-                node-version: '16.14.0'
-            - name: 'Install dependencies'    
-              run: npm i
-            - name: 'Create a Build'
-              run: npm run build
-            - name: 'Create a Zip File'
-              run: zip -r todo.zip build/
-            - name: Upload Build
-              uses: ./
-              with:
-                  filename: Build
-                  path: ${{github.workspace}}/react-webapp/todo.zip
+        uses: ${{github.workspace}}/.gtihub/workflows/create_build.yaml
     deploy_to_production:
         name: 'Deploy To Production'
         needs: [create_build]
