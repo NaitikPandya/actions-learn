@@ -1,11 +1,6 @@
 name: Create Build
 on:
     workflow_call:
-    push:
-        branches:
-            - main
-            - feature/webAppReact
-            - webAppReact
 
 jobs:
     Test:
@@ -14,12 +9,13 @@ jobs:
           run:
             working-directory: ./react-webapp/
         steps:
+            - uses: ./ 
             - name: 'Create a Build'
               run: npm run build
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-              uses: ./
+              uses: actions/upload-artifact@v3
               with:
-                  filename: Build
+                  name: Build
                   path: ${{github.workspace}}/react-webapp/todo.zip
