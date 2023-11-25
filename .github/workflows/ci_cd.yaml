@@ -21,6 +21,12 @@ jobs:
               run: npm i
             - name: 'Run Tests'
               run: npm test -- --coverage
+            - name: cd
+              run: |
+                  cd coverage/
+                  ls
+                  cd lcov-report/
+                  ls
             - name: Upload Test Results
               uses: ./
               with:
