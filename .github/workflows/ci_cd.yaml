@@ -25,7 +25,7 @@ jobs:
               uses: ./
               with:
                   filename: Test Result
-                  path: ./react-webapp/coverage/Icov-report/index.html
+                  path: coverage/Icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
