@@ -1,0 +1,24 @@
+name: Run Tests
+on:
+    workflow_call:
+    pull_request:
+        branches:
+            - main
+            - feature/webAppReact
+            - webAppReact
+
+jobs:
+    Test:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./react-webapp/
+        steps:
+            - uses: ./
+            - name: 'Run Tests'
+              run: npm test -- --coverage
+            - name: Upload Test Results
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Test Result
+                  path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
