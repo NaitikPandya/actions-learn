@@ -21,11 +21,13 @@ jobs:
               run: npm i
             - name: 'Run Tests'
               run: npm test -- --coverage
+            - name: 'LOOK FOLDER'
+              run: ls
             - name: Upload Test Results
-              uses: actions/upload-artifact@v3
+              uses: ${{github.workspace}}/.github/workflows/create_artifact.yaml
               with:
-                  name: Test Result
-                  path: ${{github.workspace}}/react-webapp/coverage/Icov-report/index.html
+                 filename: Test Result
+                 path: ${{github.workspace}}/react-webapp/coverage/Icov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
@@ -46,9 +48,9 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-              uses: actions/upload-artifact@v3
+              uses: ${{github.workspace}}/.github/workflows/create_artifact.yaml
               with:
-                  name: Build
+                  filename: Build
                   path: ${{github.workspace}}/react-webapp/todo.zip
     deploy_to_production:
         name: 'Deploy To Production'
