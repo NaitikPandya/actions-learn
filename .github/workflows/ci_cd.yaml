@@ -24,7 +24,7 @@ jobs:
             - name: 'LOOK FOLDER'
               run: ls
             - name: Upload Test Results
-              uses: NaitikPandya/action-learn/.github/workflows/create_artifact.yaml@webAppReact
+              uses: ./
               with:
                   filename: Test Result
                   path: ${{github.workspace}}/react-webapp/coverage/Icov-report/index.html
@@ -48,7 +48,7 @@ jobs:
             - name: 'Create a Zip File'
               run: zip -r todo.zip build/
             - name: Upload Build
-              uses: NaitikPandya/action-learn/.github/workflows/create_artifact.yaml@webAppReact
+              uses: ./
               with:
                   filename: Build
                   path: ${{github.workspace}}/react-webapp/todo.zip
