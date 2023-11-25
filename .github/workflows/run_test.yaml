@@ -1,0 +1,28 @@
+name: Run Tests
+on:
+    workflow_call:
+    push:
+        branches:
+            - main
+
+jobs:
+    Test:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./react-webapp/
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Nodejs
+              uses: actions/setup-node@v3
+              with:
+                node-version: '16.14.0'
+            - name: 'Install dependencies'    
+              run: npm i
+            - name: 'Run Tests'
+              run: npm test -- --coverage
+            - name: Upload Test Results
+              uses: ./
+              with:
+                  filename: Test Result
+                  path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
