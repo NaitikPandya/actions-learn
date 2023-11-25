@@ -21,17 +21,11 @@ jobs:
               run: npm i
             - name: 'Run Tests'
               run: npm test -- --coverage
-            - name: cd
-              run: |
-                  cd coverage/
-                  ls
-                  cd lcov-report/
-                  ls
             - name: Upload Test Results
               uses: ./
               with:
                   filename: Test Result
-                  path: coverage/lcov-report/index.html
+                  path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
     create_build:
         name: Create Build
         needs: [Test]
