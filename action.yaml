@@ -1,18 +1,14 @@
-name: Create Artifact
-description: "Create Artifact from the output of the jobs"
-inputs:
-  filename:
-    required: true
-    type: string
-  path:
-    required: true
-    type: string
+name: Pre Steps
+description: "Pre Steps to run before run workflows"
 
 runs:
   using: composite
   steps:
-    - uses: actions/upload-artifact@v3
+    - uses: actions/checkout@v3
+    - name: Use Nodejs
+      uses: actions/setup-node@v3
       with:
-        name: ${{inputs.filename}}
-        path: ${{inputs.path}}
+          node-version: '16.14.0'
+    - name: 'Install dependencies'    
+      run: npm i
           
