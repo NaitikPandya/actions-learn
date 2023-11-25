@@ -14,17 +14,11 @@ jobs:
           run:
             working-directory: ./react-webapp/
         steps:
-            - uses: actions/checkout@v3
-            - name: Use Nodejs
-              uses: actions/setup-node@v3
-              with:
-                node-version: '16.14.0'
-            - name: 'Install dependencies'    
-              run: npm i
+            - uses: ./
             - name: 'Run Tests'
               run: npm test -- --coverage
             - name: Upload Test Results
-              uses: ./
+              uses: actions/upload-artifact@v3
               with:
-                  filename: Test Result
+                  name: Test Result
                   path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
