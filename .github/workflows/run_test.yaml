@@ -1,9 +1,11 @@
 name: Run Tests
 on:
     workflow_call:
-    push:
+    pull_request:
         branches:
             - main
+            - feature/webAppReact
+            - webAppReact
 
 jobs:
     Test:
