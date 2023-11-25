@@ -22,7 +22,8 @@ jobs:
             - name: 'Run Tests'
               run: npm test -- --coverage
             - name: 'LOOK FOLDER'
-              run: ls
+              run: cd coverage
+                  | ls
             - name: Upload Test Results
               uses: ./
               with:
