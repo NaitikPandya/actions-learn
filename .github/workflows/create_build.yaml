@@ -1,0 +1,25 @@
+name: Create Build
+on:
+    workflow_call:
+    push:
+        branches:
+            - main
+            - feature/webAppReact
+            - webAppReact
+
+jobs:
+    Test:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./react-webapp/
+        steps:
+            - name: 'Create a Build'
+              run: npm run build
+            - name: 'Create a Zip File'
+              run: zip -r todo.zip build/
+            - name: Upload Build
+              uses: ./
+              with:
+                  filename: Build
+                  path: ${{github.workspace}}/react-webapp/todo.zip
