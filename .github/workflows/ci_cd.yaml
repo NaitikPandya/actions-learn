@@ -3,10 +3,14 @@ on:
     push:
         branches:
             - feature/webApp
+            - webAppReact
 
 jobs:
-    test:
+    Test:
         runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./react-webapp/
         steps:
             - uses: actions/checkout@v3
             - name: Use Nodejs
@@ -14,30 +18,50 @@ jobs:
               with:
                 node-version: '16.14.0'
             - name: 'Install dependencies'    
-              run: |
-                  cd react-webapp/
-                  npm i
+              run: npm i
             - name: 'Run Tests'
-              run: npm test
-
-    deploy:
+              run: npm test -- --coverage
+            - name: Upload Test Results
+              uses: ./
+              with:
+                  filename: Test Result
+                  path: ${{github.workspace}}/react-webapp/coverage/lcov-report/index.html
+    create_build:
+        name: Create Build
+        needs: [Test]
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./react-webapp/
         steps:
             - uses: actions/checkout@v3
             - name: Use Nodejs
               uses: actions/setup-node@v3
               with:
                 node-version: '16.14.0'
+            - name: 'Install dependencies'    
+              run: npm i
             - name: 'Create a Build'
-              run: |
-                  cd react-webapp/
-                  npm run build
-                  cd ..
+              run: npm run build
             - name: 'Create a Zip File'
-              run: zip -r todo.zip react-webapp/build/
-            - name: Deploy to Netlify
-              run: curl -H "Content-Type:application/zip" \
-                        -H "Authorization:Bearer " ${{ secrets.NETLIFY_TOKEN }} \
-                        --data-binary "todo.zip" \
-                        https://api.netlify.com/api/v1/sites
-
+              run: zip -r todo.zip build/
+            - name: Upload Build
+              uses: ./
+              with:
+                  filename: Build
+                  path: ${{github.workspace}}/react-webapp/todo.zip
+    deploy_to_production:
+        name: 'Deploy To Production'
+        needs: [create_build]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: 'get the build zip'
+              uses: actions/download-artifact@v3
+              with:
+                  name: Build
+            - name: 'Deploy to Netlify'
+              run: 'curl -H "Content-Type: application/zip Authorization: Bearer ${{ secrets.NETLIFY_TOKEN }}" --data-binary "@todo.zip" https://api.netlify.com/api/v1/sites/incandescent-moonbeam-c855e2.netlify.app/deploys'
+        
+              
+    
