@@ -3,14 +3,14 @@ description: "Pre Steps to run before run workflows"
 
 runs:
   using: composite
-  working_directory: ./react-app/
   steps:
     - uses: actions/checkout@v3
     - name: Use Nodejs
       uses: actions/setup-node@v3
       with:
           node-version: '16.14.0'
-    - name: 'Install dependencies'    
+    - name: 'Install dependencies'  
+      working_directory: ./react-app/
       shell: bash
       run: npm i
           
