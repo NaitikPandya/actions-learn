@@ -8,11 +8,11 @@ on:
 
 jobs:
     Test:
-        uses: ${{github.workspace}}/.github/workflows/run_test.yaml@main
+        uses: ./.github/workflows/run_test.yaml
     create_build:
         name: Create Build
         needs: [Test]
-        uses: ${{github.workspace}}/.github/workflows/create_build.yaml@main
+        uses: ./.github/workflows/create_build.yaml
     deploy_to_production:
         name: 'Deploy To Production'
         needs: [create_build]
