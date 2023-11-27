@@ -11,6 +11,8 @@ jobs:
             working-directory: ./react-webapp/
         steps:
             - uses: NaitikPandya/actions-learn@main
+              with:
+                  workDir: react-webapp
             - name: 'Create a Build'
               run: npm run build
             - name: 'Create a Zip File'
