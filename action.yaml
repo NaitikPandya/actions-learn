@@ -3,6 +3,7 @@ description: "Pre Steps to run before run workflows"
 
 runs:
   using: composite
+  working_directory: ./react-app/
   steps:
     - uses: actions/checkout@v3
     - name: Use Nodejs
