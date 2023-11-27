@@ -1,6 +1,7 @@
 name: Create Build
 on:
     workflow_call:
+    workflow_dispatch:
 
 jobs:
     Test:
@@ -9,7 +10,7 @@ jobs:
           run:
             working-directory: ./react-webapp/
         steps:
-            - uses: ./ 
+            - uses: NaitikPandya/actions-learn@main
             - name: 'Create a Build'
               run: npm run build
             - name: 'Create a Zip File'
