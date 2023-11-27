@@ -14,8 +14,8 @@ jobs:
           run:
             working-directory: ./react-webapp/
         steps:
-            - name: 'Checkout & install dependencies'
-              uses: NaitikPandya/actions-learn@main
+            - uses: actions/checkout@v3
+            - uses: NaitikPandya/customAction@main
             - name: 'Run Tests'
               run: npm test -- --coverage
             - name: Upload Test Results
