@@ -10,7 +10,7 @@ on:
 
 jobs:
     Test:
-        name: 'Test & coverage'
+        name: 'Test Cases coverage & Artifact'
         runs-on: ubuntu-latest
         defaults:
           run:
