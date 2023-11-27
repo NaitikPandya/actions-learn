@@ -14,8 +14,7 @@ jobs:
           run:
             working-directory: ./react-webapp/
         steps:
-            - uses: actions/checkout@v3
-            - uses: NaitikPandya/customAction@main
+            - uses: ./
             - name: 'Run Tests'
               run: npm test -- --coverage
             - name: Upload Test Results
