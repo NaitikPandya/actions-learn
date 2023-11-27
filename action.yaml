@@ -1,0 +1,14 @@
+name: Pre Steps
+description: "Pre Steps to run before run workflows"
+
+runs:
+  using: composite
+  steps:
+    - name: Use Nodejs
+      uses: actions/setup-node@v3
+      with:
+          node-version: '16.14.0'
+    - name: 'Install dependencies'    
+      shell: bash
+      run: npm i
+          
