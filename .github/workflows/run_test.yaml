@@ -16,6 +16,8 @@ jobs:
             working-directory: ./react-webapp/
         steps:
             - uses: NaitikPandya/actions-learn@main
+              with:
+                  workDir: react-webapp
             - name: 'Run Tests'
               run: npm test -- --coverage
             - name: Upload Test Results
