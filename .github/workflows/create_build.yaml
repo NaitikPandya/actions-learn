@@ -4,7 +4,8 @@ on:
     workflow_dispatch:
 
 jobs:
-    Test:
+    Build:
+        name: 'Generate Build & Artifact'
         runs-on: ubuntu-latest
         defaults:
           run:
