@@ -4,7 +4,6 @@ description: "Pre Steps to run before run workflows"
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v3
     - name: Use Nodejs
       uses: actions/setup-node@v3
       with:
