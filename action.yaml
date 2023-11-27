@@ -10,7 +10,7 @@ runs:
       with:
           node-version: '16.14.0'
     - name: 'Install dependencies'  
-      working-directory: react-app/
+      working-directory: react-webapp/
       shell: bash
       run: npm i
           
