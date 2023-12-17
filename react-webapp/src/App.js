@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
      <div className='AddItem'>
-      <TextField value={enteredText} label="Item" inputProps={{
+      <TextField value={enteredText} label="Item1" inputProps={{
         'data-testid': 'itemTextInput'
       }} data-testid='itemTextf' onChange={(value) => {
         if(value.target.value){
